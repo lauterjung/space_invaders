@@ -1,9 +1,7 @@
 import pygame
 
 import sys
-from classes.character import Character
-from classes.ship import Ship
-
+from classes.rocket import Rocket
 
 from classes.settings import Settings
 
@@ -27,14 +25,13 @@ class AlienInvasion:
         # title
         pygame.display.set_caption("Alien Invasion")
         
-        self.ship = Ship(self)
-        self.character = Character(self)
-    
+        self.rocket = Rocket(self)
+
     def run_game(self):
         """Start the main loop for the game."""
         while True:
             self._check_events()
-            self.ship.update()
+            self.rocket.update()
             self._update_screen()
 
     def _check_events(self):
@@ -49,23 +46,30 @@ class AlienInvasion:
     
     def _check_keydown_events(self, event):                
         if event.key == pygame.K_RIGHT:
-            self.ship.moving_right = True
+            self.rocket.moving_right = True
         elif event.key == pygame.K_LEFT:
-            self.ship.moving_left = True
+            self.rocket.moving_left = True
+        if event.key == pygame.K_UP:
+            self.rocket.moving_up = True
+        elif event.key == pygame.K_DOWN:
+            self.rocket.moving_down = True
         elif event.key == pygame.K_q:
             sys.exit()
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
-            self.ship.moving_right = False
+            self.rocket.moving_right = False
         if event.key == pygame.K_LEFT:
-            self.ship.moving_left = False
+            self.rocket.moving_left = False
+        if event.key == pygame.K_UP:
+            self.rocket.moving_up = False
+        if event.key == pygame.K_DOWN:
+            self.rocket.moving_down = False
             
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
         self.screen.fill(self.settings.bg_color)
-        self.ship.blitme()
-        self.character.blitme()
+        self.rocket.blitme()
 
         pygame.display.flip()
         
