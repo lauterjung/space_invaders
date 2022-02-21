@@ -38,12 +38,8 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
-            self.bullets.update()
+            self._update_bullets()
             self._update_screen()
-            for bullet in self.bullets:
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
-            # print(len(self.bullets))
 
     def _check_events(self):
         """Respond to keypresses and mouse events."""
@@ -85,7 +81,10 @@ class AlienInvasion:
             bullet.draw_bullet()
     
     def _update_bullets(self):
-        pass
+        self.bullets.update()
+        for bullet in self.bullets:
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
 
         pygame.display.flip()
         
